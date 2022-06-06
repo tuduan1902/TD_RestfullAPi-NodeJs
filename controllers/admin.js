@@ -13,7 +13,7 @@ exports.postAddProduct = (req, res, next) => {
     const imageUrl = req.body.imageUrl;
     const description = req.body.description;
     const price = req.body.price;
-    const product = new Product(title, imageUrl, description, price);
+    const product = new Product(null, title, imageUrl, description, price);
     product.save();
     res.redirect('/');
 };
@@ -36,18 +36,6 @@ exports.getEditProduct = (req, res, next) => {
         });
     });
 };
-// exports.getEditProduct = (req, res, next) => {
-//     const editMode = req.query.edit;
-//     if(!editMode) {
-// 		 //console.log('tuduan')
-//         return res.redirect('/');  
-//     }
-//     res.render('admin/edit-product',{
-//         pageTitle: 'Edit Product',
-//         path: '/admin/edit-product',
-//         editing: editMode
-//     });
-// }
 
 exports.getProducts = (req, res, next) => {
     Product.fetchAll(products => {
