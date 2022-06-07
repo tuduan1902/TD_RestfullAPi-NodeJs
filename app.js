@@ -7,7 +7,7 @@ const app = express();
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const errorControllers = require('./controllers/error');
-const db = require('./util/database');
+const sequelize = require('./util/database');
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -20,7 +20,13 @@ app.use(shopRoutes);
 
 app.use(errorControllers.get404);
 
+sequelize
+    .sync()
+    .then(result => {
+        app.listen(3000, () =>{
+            console.log(`App listening at http://localhost:3000`);
+        });
+    })
+    .catch(err => console.log(err)) 
+
 // SERVER
-app.listen(3000, () =>{
-    console.log(`App listening at http://localhost:3000`);
-});
